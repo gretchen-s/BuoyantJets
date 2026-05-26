@@ -62,7 +62,7 @@
     varf vJ(defu(dum), defu(v))
     =  int2d(Th)(
        ugradu(v, ub ,dum) + ugradu(v, dum, ub) + ( gradphi(ubT)*ugradf(v, dum) + diff(v, dum)*phi(ubT) )/(params["Re"]*params["S"])
-      + (v*gradphi(ubT) + phi(ubT)*div(v))*(div(dum)/(params["Re"]*params["S"]))
+      + (v*gradphi(ubT) + phi(ubT)*div(v))*(div(dum)/(3.*params["Re"]*params["S"]))
       + vT*(ugradf(dum, ubT) - phi(ubT)*div(dum)/(params["S"]-1))
       + vp*phi(ubT)*div(dum)/(params["S"]-1)
       + ugradf(v, ubp)*dumT*(params["S"]-1)  
@@ -76,12 +76,12 @@
       //  v*phi(ubT)*ndotgrads(dum)/(params["Re"]*params["S"]) + phi(ubT)*ndotu(v)*div(dum)/(params["Re"]*params["S"]) 
       // + (params["S"]-1)/(params["Re"]*params["S"])*( v*dumT*ndotgrads(ub) + dumT*ndotu(v)*div(ub) ) 
       // + ((params["S"]-1)*dumT*vp*ndotgrads(ubT) + phi(ubT)*vp*ndotgrads(dumT))/(params["Pr"]*params["Re"]*params["S"])
-      phi(ubT)*ndotu(v)*div(dum)/(params["Re"]*params["S"]) + (params["S"]-1)/(params["Re"]*params["S"])*dumT*ndotu(v)*div(ub)
+      phi(ubT)*ndotu(v)*div(dum)/(3.*params["Re"]*params["S"]) + (params["S"]-1)/(params["Re"]*params["S"])*dumT*ndotu(v)*div(ub)
     )
 
     + int2d(Th)(
        ugradu(v, ub , um) + ugradu(v, um, ub) + ( gradphi(ubT)*ugradf(v, um) + diff(v, um)*phi(ubT) )/(params["Re"]*params["S"])
-      + (v*gradphi(ubT) + phi(ubT)*div(v))*(div(um)/(params["Re"]*params["S"]))
+      + (v*gradphi(ubT) + phi(ubT)*div(v))*(div(um)/(3.*params["Re"]*params["S"]))
       + vT*(ugradf(um, ubT) - phi(ubT)*div(um)/(params["S"]-1))
       + vp*phi(ubT)*div(um)/(params["S"]-1)
       + ugradf(v, ubp)*umT*(params["S"]-1)  
@@ -95,7 +95,7 @@
       //  v*phi(ubT)*ndotgrads(um)/(params["Re"]*params["S"]) + phi(ubT)*ndotu(v)*div(um)/(params["Re"]*params["S"]) 
       // + (params["S"]-1)/(params["Re"]*params["S"])*( v*umT*ndotgrads(ub) + umT*ndotu(v)*div(ub) ) 
       // + ((params["S"]-1)*umT*vp*ndotgrads(ubT) + phi(ubT)*vp*ndotgrads(umT))/(params["Pr"]*params["Re"]*params["S"])
-      phi(ubT)*ndotu(v)*div(um)/(params["Re"]*params["S"]) + (params["S"]-1)/(params["Re"]*params["S"])*umT*ndotu(v)*div(ub)
+      phi(ubT)*ndotu(v)*div(um)/(3.*params["Re"]*params["S"]) + (params["S"]-1)/(params["Re"]*params["S"])*umT*ndotu(v)*div(ub)
 
 
     )  
