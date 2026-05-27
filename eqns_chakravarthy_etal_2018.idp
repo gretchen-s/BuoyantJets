@@ -50,6 +50,7 @@
           ugradu(v, ub, ub) + udotgradphi(v, ubT)*ubp + phi(ubT)*div(v)*p
           + ( gradphi(ubT)*ugradf(v, ub) )/(params["Re"]*params["S"])
           + ( gradphi(ubT)*ugradf(v, ub) + phi(ubT)*div(v)*div(ub) )/(3.*params["Re"]*params["S"])
+          - vx*params["Ri"]*ubT 
           + vT * (ugradf(ub, ubT) - phi(ubT)/(params["S"]-1)*div(ub))
           + ( vp*(params["S"]-1)*diff(ubT, ubT) + phi(ubT)*diff(vp, ubT))/(params["Pr"]*params["Re"]*params["S"]) 
           + vp*phi(ubT)/(params["S"]-1)*div(ub)
@@ -64,7 +65,7 @@
     varf vJ(defu(dum), defu(v))
     =  int2d(Th)(
        ugradu(v, ub ,dum) + ugradu(v, dum, ub) + ( gradphi(ubT)*ugradf(v, dum) + diff(v, dum)*phi(ubT) )/(params["Re"]*params["S"])
-      + (v*gradphi(ubT) + phi(ubT)*div(v))*(div(dum)/(3.*params["Re"]*params["S"]))
+      + (v*gradphi(ubT) + phi(ubT)*div(v))*(div(dum)/(3.*params["Re"]*params["S"])) - vx*params["Ri"]*dumT 
       + vT*(ugradf(dum, ubT) - phi(ubT)*div(dum)/(params["S"]-1))
       + vp*phi(ubT)*div(dum)/(params["S"]-1)
       + udotgradphi(v, dumT)*ubp + phi(dumT)*div(v)*p
@@ -83,7 +84,7 @@
 
     + int2d(Th)(
        ugradu(v, ub , um) + ugradu(v, um, ub) + ( gradphi(ubT)*ugradf(v, um) + diff(v, um)*phi(ubT) )/(params["Re"]*params["S"])
-      + (v*gradphi(ubT) + phi(ubT)*div(v))*(div(um)/(3.*params["Re"]*params["S"]))
+      + (v*gradphi(ubT) + phi(ubT)*div(v))*(div(um)/(3.*params["Re"]*params["S"]))  - vx*params["Ri"]*umT 
       + vT*(ugradf(um, ubT) - phi(ubT)*div(um)/(params["S"]-1))
       + vp*phi(ubT)*div(um)/(params["S"]-1)
       + udotgradphi(v, umT)*ubp + phi(umT)*div(v)*p    
