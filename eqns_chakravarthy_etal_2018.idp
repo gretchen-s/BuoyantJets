@@ -29,8 +29,8 @@
   // phi macro for simplification 
 
   macro phi(T)      ( 1 + T*(params["S"] - 1.0) ) //EOM
-  macro gradphi(T)  ( (params["S"] - 1.0)*(dx(T) + dy(T)) )         //EOM <-- this is incorrect! the gradient of a scalar is a vector.
- 
+  macro gradphi(T)  [ (params["S"] - 1.0)*dx(T), (params["S"] - 1.0)*dy(T) ] //EOM 
+
  // Boundary Conditions 
   macro BoundaryConditions(u, U)
       on(BCinflow, u = U - Uinlet, u#y = U#y, u#T = U#T - (1.0 - Uinlet/params["S"])/((params["S"]-1)*(1.0 - (1.0 - 1.0/params["S"])*Uinlet)))
@@ -46,7 +46,7 @@
  // RESIDUAL OPERATOR 
     varf vR(defu(um), defu(v))
       = int2d(Th)(
-          ugradu(v, ub, ub) + phi(ubT)*ugradf(v, ubp) + ( gradphi(ubT)*ugradf(v, ub) )/(params["Re"]*params["S"])
+          ugradu(v, ub, ub) + vdotu(v, ubp)*gradphi(ubT) + phi(ubT)*ugradf(ubp, v) + ( gradphi(ubT)*ugradf(v, ub) )/(params["Re"]*params["S"])
           + ( gradphi(ubT)*ugradf(v, ub) + phi(ubT)*div(v)*div(ub) )/(3.*params["Re"]*params["S"])
           + vT * (ugradf(ub, ubT) - phi(ubT)/(params["S"]-1)*div(ub))
           + ( vp*(params["S"]-1)*diff(ubT, ubT) + phi(ubT)*diff(vp, ubT))/(params["Pr"]*params["Re"]*params["S"]) 
@@ -65,7 +65,7 @@
       + (v*gradphi(ubT) + phi(ubT)*div(v))*(div(dum)/(3.*params["Re"]*params["S"]))
       + vT*(ugradf(dum, ubT) - phi(ubT)*div(dum)/(params["S"]-1))
       + vp*phi(ubT)*div(dum)/(params["S"]-1)
-      + ugradf(v, ubp)*dumT*(params["S"]-1)  
+      + vdotu(v, ubp)*gradphi(dumT) + phi(dumT)*ugradf(ubp, v)     
       + ( (params["S"]-1)/((params["S"]*params["Re"])) )*(ugradf(v, dumT)*div(ub) + dumT*div(v)*div(ub))
       + vT*(ugradf(ub, dumT) - dumT*div(ub))
       + (vp*(params["S"]-1)*diff(dumT, ubT) + gradphi(ubT)*ugradf(ub, vp)*dumT
@@ -84,7 +84,7 @@
       + (v*gradphi(ubT) + phi(ubT)*div(v))*(div(um)/(3.*params["Re"]*params["S"]))
       + vT*(ugradf(um, ubT) - phi(ubT)*div(um)/(params["S"]-1))
       + vp*phi(ubT)*div(um)/(params["S"]-1)
-      + ugradf(v, ubp)*umT*(params["S"]-1)  
+      + vdotu(v, ubp)*gradphi(umT) + phi(umT)*ugradf(ubp, v)     
       + ( (params["S"]-1)/((params["S"]*params["Re"])) )*(ugradf(v, umT)*div(ub) + umT*div(v)*div(ub))
       + vT*(ugradf(ub, umT) - umT*div(ub))
       + (vp*(params["S"]-1)*diff(umT, ubT) + gradphi(ubT)*ugradf(ub, vp)*umT
