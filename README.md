@@ -12,6 +12,7 @@ This file shows an example `ff-bifbox` workflow for reproducing the results of t
 } 
 ```
 The paper considers a buoyant jet/plume in a cylindrical (axisymmetric) domain. In the original paper, the governing equations are given as:
+
 $$
 \begin{align*} 
 \rho\frac{\partial u_i}{\partial t} + u_j\frac{\partial u_i}{\partial x_j} + \frac{\partial p}{\partial x_i} - \frac{1}{Re\,S}\left[\frac{\partial^2u_i}{\partial x_j^2} + \frac{1}{3}\delta_{ij}\frac{\partial}{\partial x_j}\left(\frac{\partial u_k}{\partial x_k}\right)\right] - \frac{Ri}{S-1}\left(1-\rho\right)\hat{e}_x &= 0 \\
@@ -20,15 +21,18 @@ $$
 \rho\left[1+T\left(S-1\right)\right] - 1 &= 0.
 \end{align*}
 $$
+
 In the implementation, we must instead make use of the weak form. First, we eliminate the density variable using the equation of state. Then, we introduce test functions and integrate over the domain $\Omega$. We then seek, in the appropriate spaces, solutions $\vec{q}=\left(u_i,T,p\right)$ such that for all test functions $\vec{\check{q}}=\left(\check{u}_i,\check{T},\check{p}\right)$,
+
 $$
 \begin{align*} 
-\left(\check{u}_i,\frac{\partial u_i}{\partial t}\right)_\Omega + \left(\check{u}_i,\left[1+T\left(S-1\right)\right]u_j\frac{\partial u_i}{\partial x_j}\right)_\Omega - \left(\frac{\partial}{\partial x_i}\left(\check{u}_i\left[1+T\left(S-1\right)\right]\right),p\right)_\Omega \\
-+ \left(\frac{\partial}{\partial x_j}\left(\check{u}_i\left[1+T\left(S-1\right)\right]\right),\frac{1}{Re\,S}\left[\frac{\partial u_i}{\partial x_j} + \frac{1}{3}\delta_{ij}\frac{\partial u_k}{\partial x_k}\right]\right)_\Omega - \left(\check{u}_i\hat{n}_j\left[1+T\left(S-1\right)\right],\frac{1}{3\,Re\,S}\delta_{ij}\frac{\partial u_k}{\partial x_k}\right)_{\partial\Omega} - \left(\check{u}_x,Ri\,T\right)_\Omega \\
-+ \left(\check{T},\frac{\partial T}{\partial t}\right)_\Omega + \left(\check{T},\left[1+T\left(S-1\right)\right]u_i\frac{\partial T}{\partial x_i}\right)_\Omega + \left(\frac{\partial}{\partial x_i}\left(\check{T}\left[1+T\left(S-1\right)\right]\right),\frac{1}{Pr\,Re\,S}\frac{\partial T}{\partial x_i}\right)_\Omega \\
-+ \left(\check{p},\frac{\partial T}{\partial t}\right)_\Omega - \left(\check{p},\left(\frac{1}{S-1}+T\right)\frac{\partial u_i}{\partial x_i}\right)_\Omega + \left(\check{p},\frac{\partial T}{\partial x_i}u_i\right)_\Omega &= 0.
+&\left(\check{u}_i,\frac{\partial u_i}{\partial t}\right)_{\Omega} + \left(\check{u}_i,\left[1+T\left(S-1\right)\right]u_j\frac{\partial u_i}{\partial x_j}\right)_{\Omega} - \left(\frac{\partial}{\partial x_i}\left(\check{u}_i\left[1+T\left(S-1\right)\right]\right),p\right)_{\Omega} - \left(\check{u}_x,Ri\,T\right)_{\Omega} \\
+&+ \left(\frac{\partial}{\partial x_j}\left(\check{u}_i\left[1+T\left(S-1\right)\right]\right),\frac{1}{Re\,S}\left[\frac{\partial u_i}{\partial x_j} + \frac{1}{3}\delta_{ij}\frac{\partial u_k}{\partial x_k}\right]\right)_{\Omega} - \left(\check{u}_i\hat{n}_j\left[1+T\left(S-1\right)\right],\frac{1}{3\,Re\,S}\delta_{ij}\frac{\partial u_k}{\partial x_k}\right)_{\partial\Omega}\\
+&+ \left(\check{T},\frac{\partial T}{\partial t}\right)_{\Omega} + \left(\check{T},\left[1+T\left(S-1\right)\right]u_i\frac{\partial T}{\partial x_i}\right)_{\Omega} + \left(\frac{\partial}{\partial x_i}\left(\check{T}\left[1+T\left(S-1\right)\right]\right),\frac{1}{Pr\,Re\,S}\frac{\partial T}{\partial x_i}\right)_{\Omega} \\
+&+ \left(\check{p},\frac{\partial T}{\partial t}\right)_{\Omega} - \left(\check{p},\left(\frac{1}{S-1}+T\right)\frac{\partial u_i}{\partial x_i}\right)_{\Omega} + \left(\check{p},\frac{\partial T}{\partial x_i}u_i\right)_{\Omega} = 0.
 \end{align*}
 $$
+
 It is these equations that have been implemented in this work.
 
 The commands below illustrate how to perform a weakly nonlinear analysis of the 2D incompressible flow around a cylinder and an open cavity using `ff-bifbox`.
