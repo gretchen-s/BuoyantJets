@@ -26,10 +26,10 @@ In the implementation, we must instead make use of the weak form. First, we elim
 
 $$
 \begin{align*} 
-\left(\check{u}_i,\frac{\partial u_i}{\partial t}\right)_{\Omega} + \left(\check{u}_i,\left[1+T\left(S-1\right)\right]u_j\frac{\partial u_i}{\partial x_j}\right)_{\Omega} - \left(\frac{\partial}{\partial x_i}\left(\check{u}_i\left[1+T\left(S-1\right)\right]\right),p\right)_{\Omega} &\\
-+ \left(\frac{\partial}{\partial x_j}\left(\check{u}_i\left[1+T\left(S-1\right)\right]\right),\frac{1}{Re\,S}\left[\frac{\partial u_i}{\partial x_j} + \frac{1}{3}\delta_{ij}\frac{\partial u_k}{\partial x_k}\right]\right)_{\Omega} - \left(\check{u}_i\hat{n}_j\left[1+T\left(S-1\right)\right],\frac{1}{3\,Re\,S}\delta_{ij}\frac{\partial u_k}{\partial x_k}\right)_{\partial\Omega} - \left(\check{u}_x,Ri\,T\right)_{\Omega} &\\
-+ \left(\check{T},\frac{\partial T}{\partial t}\right)_{\Omega} + \left(\check{T},\left[1+T\left(S-1\right)\right]u_i\frac{\partial T}{\partial x_i}\right)_{\Omega} + \left(\frac{\partial}{\partial x_i}\left(\check{T}\left[1+T\left(S-1\right)\right]\right),\frac{1}{Pr\,Re\,S}\frac{\partial T}{\partial x_i}\right)_{\Omega} &\\
-+ \left(\check{p},\frac{\partial T}{\partial t}\right)_{\Omega} - \left(\check{p},\left(\frac{1}{S-1}+T\right)\frac{\partial u_i}{\partial x_i}\right)_{\Omega} + \left(\check{p},\frac{\partial T}{\partial x_i}u_i\right)_{\Omega} &= 0.
+\left(\check{u}_i,\frac{\partial u_i}{\partial t}\right)_{\Omega} + \left(\check{u}_i,\left[1+T\left(S-1\right)\right]u_j\frac{\partial u_i}{\partial x_j}\right)_{\Omega} - \left(\frac{\partial}{\partial x_i}\left(\check{u}_i\left[1+T\left(S-1\right)\right]\right),p\right)_{\Omega} \\
++ \left(\frac{\partial}{\partial x_j}\left(\check{u}_i\left[1+T\left(S-1\right)\right]\right),\frac{1}{Re\,S}\left[\frac{\partial u_i}{\partial x_j} + \frac{1}{3}\delta_{ij}\frac{\partial u_k}{\partial x_k}\right]\right)_{\Omega} - \left(\check{u}_i\hat{n}_j\left[1+T\left(S-1\right)\right],\frac{1}{3\,Re\,S}\delta_{ij}\frac{\partial u_k}{\partial x_k}\right)_{\partial\Omega} - \left(\check{u}_x,Ri\,T\right)_{\Omega} \\
++ \left(\check{T},\frac{\partial T}{\partial t}\right)_{\Omega} + \left(\check{T},\left[1+T\left(S-1\right)\right]u_i\frac{\partial T}{\partial x_i}\right)_{\Omega} + \left(\frac{\partial}{\partial x_i}\left(\check{T}\left[1+T\left(S-1\right)\right]\right),\frac{1}{Pr\,Re\,S}\frac{\partial T}{\partial x_i}\right)_{\Omega} \\
++ \left(\check{p},\frac{\partial T}{\partial t}\right)_{\Omega} - \left(\check{p},\left(\frac{1}{S-1}+T\right)\frac{\partial u_i}{\partial x_i}\right)_{\Omega} + \left(\check{p},\frac{\partial T}{\partial x_i}u_i\right)_{\Omega} = 0.
 \end{align*}
 $$
 
