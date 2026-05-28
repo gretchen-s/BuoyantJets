@@ -47,9 +47,11 @@
  // RESIDUAL OPERATOR 
     varf vR(defu(um), defu(v))
       = int2d(Th)(
-          ugradu(v, ub, ub) + udotgradphi(v, ubT)*ubp + phi(ubT)*div(v)*p
-          + ( gradphi(ubT)*ugradf(v, ub) )/(params["Re"]*params["S"])
-          + ( gradphi(ubT)*ugradf(v, ub) + phi(ubT)*div(v)*div(ub) )/(3.*params["Re"]*params["S"])
+          ugradu(v, ub, ub) + udotgradphi(v, ubT)*ubp + phi(ubT)*div(v)*ubp
+          + ( phi(ubT)*ugradf(v, ub) + phi(ubT)*div(v)*div(ub)/3. 
+          + (params["S"]-1)*gradphi(ubT)*ugradf(v, ub) ) / (params["Re"]*params["S"]) 
+          //+ ( gradphi(ubT)*ugradf(v, ub) )/(params["Re"]*params["S"])
+          //+ ( gradphi(ubT)*ugradf(v, ub) + phi(ubT)*div(v)*div(ub) )/(3.*params["Re"]*params["S"])
           - vx*params["Ri"]*ubT 
           + vT * (ugradf(ub, ubT) - phi(ubT)/(params["S"]-1)*div(ub))
           + ( vp*(params["S"]-1)*diff(ubT, ubT) + phi(ubT)*diff(vp, ubT))/(params["Pr"]*params["Re"]*params["S"]) 
