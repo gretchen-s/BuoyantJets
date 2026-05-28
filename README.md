@@ -62,12 +62,22 @@ FreeFem++-mpi -v 0 importgmsh.md -gmshdir examples/BuoyantJets -dir $workdir -mi
 
 #### build initial mesh using BAMG 
 ```sh
-FreeFem++-mpi -v 0 examples/BuoyantJets/chakravarthy.md -mo $workdir/jet
+FreeFem++-mpi -v 0 examples/BuoyantJets/chakravarthy.md -mo $workdir/jet_0
 ```
 
 ## Perform parallel computations using `ff-bifbox`
 ### Zeroth order
-1. Compute base states on the created meshes at $Re=10$ from default guess
+1. Compute base state at $Pr=0.7$, $S=7$, $Re=200$, and $Ri=10^{-4}$.
 ```sh
-ff-mpirun -np $nproc basecompute.md -v 0 -dir $workdir -mi jet.msh -fo jetbase -Re 2 -Pr 0.7 -Ri 1 -S 7
+ff-mpirun -np $nproc basecompute.md -v 0 -dir $workdir -mi jet_0.msh -fo jet_0 -Re 1 -Pr 0.7 -Ri 1.0e-4 -S 7
+ff-mpirun -np $nproc basecontinue.md -v 0 -dir $workdir -fi jet_0.base -fo jet -paramtarget 200 -param Re -scount 2 -mo jet -maxcount -1
+cd $workdir && export lastfile=$(printf '%s\n' jet_*.base | sort -t_ -k2,2n | tail -1) && cd -
+ff-mpirun -np $nproc basecompute.md -v 0 -dir $workdir -fi $lastfile -fo jet -Re 200 -mo jet -pv 1
+```
+
+2. Continue base state across varying $Ri$
+```sh
+ff-mpirun -np $nproc basecontinue.md -v 0 -dir $workdir -fi jet.base -fo plume -paramtarget 1e3 -param Ri -scount 5 -mo plume -maxcount -1
+cd $workdir && export lastfile=$(printf '%s\n' plume_*.base | sort -t_ -k2,2n | tail -1) && cd -
+ff-mpirun -np $nproc basecompute.md -v 0 -dir $workdir -fi $lastfile -fo plume -Ri 1.0e3 -mo plume -pv 1
 ```
